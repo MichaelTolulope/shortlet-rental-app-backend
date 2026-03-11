@@ -7,7 +7,8 @@ export const connectDB = async () => {
             throw new Error('MONGODB_URI is not defined in environment variables');
         }
         await mongoose.connect(config.mongodbUri);
-        console.log('MongoDB Atlas connected successfully');
+        console.log('Connected to MongoDB...');
+
     } catch (error) {
         console.error('MongoDB connection error:', error.message);
         process.exit(1);

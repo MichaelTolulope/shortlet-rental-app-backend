@@ -3,6 +3,7 @@ import config from "../config/index.js"
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js"
 import RefreshToken from "../models/refreshToken.model.js"
+import AppError from "../utils/AppError.js";
 
 
 const generateAccessToken = (userId) => {
@@ -20,7 +21,7 @@ const generateRefreshToken = () => {
 const register = async (userData) => {
     const existingUser = await User.findOne({ email: userData.email.toLowerCase() });
     if (existingUser) {
-        throw new AppError('Email already registered', 400);
+        throw new AppError('Email already registered', 404);
     }
     const user = await User.create(userData);
     const accessToken = generateAccessToken(user._id);
@@ -50,11 +51,11 @@ const register = async (userData) => {
 const login = async (email, password) => {
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
     if (!user) {
-        throw new AppError('Invalid email or password', 401);
+        throw new AppError('User does not exist', 401);
     }
     const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
-        throw new AppError('Invalid email or password', 401);
+        throw new AppError('Invalid Password', 401);
     }
     if (user.status !== 'active') {
         throw new AppError('Your account has been deactivated', 401);

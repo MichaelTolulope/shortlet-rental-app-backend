@@ -12,6 +12,7 @@ const protect = async (req, res, next) => {
         }
 
         if (!token) {
+            console.log("No token")
             return next(new Error('You are not logged in. Please log in.', 401));
         }
 

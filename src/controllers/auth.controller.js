@@ -8,7 +8,12 @@ const registerUser=async (req, res) => {
             data: result,
         });
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
+        return res.status(error.statusCode?error.statusCode:500 ).json({
+            status: `${error.status}`,
+            error: error.message,
+        })
+
     }
 
 }
@@ -23,7 +28,11 @@ const loginUser = async (req, res) => {
             data: result,
         });
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
+        return res.status(error.statusCode??500).json({
+            status: `${error.status}`,
+            error: error.message,
+        })
     }
 };
 
