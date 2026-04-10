@@ -18,6 +18,10 @@ const options = {
                 url: "http://localhost:3000",
                 description: "Development server",
             },
+            {
+                url: "https://shortlet-rental-app-backend-g1x4igzyz.vercel.app",
+                description: "Production server",
+            },
         ],
     },
 
