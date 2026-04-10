@@ -63,6 +63,16 @@ const propertySchema = new mongoose.Schema(
                 trim: true,
             },
         ],
+        bookedDates: [
+            {
+                checkIn: { type: Date, required: true },
+                checkOut: { type: Date, required: true },
+                bookingId: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Booking',
+                },
+            },
+        ],
         rating: {
             type: Number,
             default: 0,
@@ -83,7 +93,6 @@ const propertySchema = new mongoose.Schema(
 );
 
 propertySchema.index({ ownerId: 1 });
-propertySchema.index({ agentId: 1 });
 propertySchema.index({ city: 1, country: 1 });
 propertySchema.index({ status: 1, propertyType: 1 });
 

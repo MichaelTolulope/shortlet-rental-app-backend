@@ -1,13 +1,92 @@
 import express from "express";
-import {registerUser} from "../controllers/auth.controller.js";
-import {login} from "../controllers/auth.controller.js";
-import {logout} from "../controllers/auth.controller.js";
+import {
+    registerUser,
+    login,
+    logout,
+} from "../controllers/auth.controller.js";
 
-const route = express.Router();
+const router = express.Router();
 
-route.post("/register",registerUser);
-route.post("/login", login);
-route.post("/logout", logout);
+/**
+ * @swagger
+ * tags:
+ *   name: Auth
+ *   description: Authentication endpoints
+ */
 
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     summary: Register a new user
+ *     description: Creates a new user account
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@example.com
+ *               password:
+ *                 type: string
+ *                 example: strongPassword123
+ *     responses:
+ *       201:
+ *         description: User successfully registered
+ *       400:
+ *         description: Bad request
+ */
+router.post("/register", registerUser);
 
-export default route;
+/**
+ * @swagger
+ * /auth/login:
+ *   post:
+ *     summary: Login user
+ *     description: Authenticates user and returns a token
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@example.com
+ *               password:
+ *                 type: string
+ *                 example: strongPassword123
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *       401:
+ *         description: Invalid credentials
+ */
+router.post("/login", login);
+
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: Logout user
+ *     description: Logs out the authenticated user
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: Logout successful
+ */
+router.post("/logout", logout);
+
+export default router;

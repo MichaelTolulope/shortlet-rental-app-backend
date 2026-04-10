@@ -12,6 +12,11 @@ const bookingSchema = new mongoose.Schema(
             ref: 'Property',
             required: true,
         },
+        images:[
+            {
+                type: String
+            }
+        ],
         checkIn: {
             type: Date,
             required: true,

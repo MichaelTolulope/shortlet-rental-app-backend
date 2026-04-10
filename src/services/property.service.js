@@ -62,6 +62,16 @@ const isPropertyOwner = async (userId, propertyId) => {
 
 };
 
+const getUnavailableDates = async (propertyId) => {
+    const property = await Property.findById(propertyId).select('bookedDates');
+
+    if (!property) {
+        throw new Error('Property not found');
+    }
+
+    return property.bookedDates;
+};
+
 export {
     createProperty,
     getAllProperties,
@@ -69,4 +79,5 @@ export {
     deleteProperty,
     updateProperty,
     getPropertyById,
+    getUnavailableDates
 }

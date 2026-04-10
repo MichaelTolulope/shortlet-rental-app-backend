@@ -48,7 +48,7 @@ const register = async (userData) => {
 };
 
 
-const login = async (email, password) => {
+const login = async (email, password, res) => {
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
     if (!user) {
         throw new AppError('User does not exist', 401);
@@ -67,8 +67,11 @@ const login = async (email, password) => {
         userId: user._id,
         expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     });
+
+
+
+
     return {
-        user: {
             id: user._id,
             firstName: user.firstName,
             lastName: user.lastName,
@@ -76,10 +79,8 @@ const login = async (email, password) => {
             role: user.role,
             status: user.status,
             avatar: user.avatar,
-        },
-        accessToken,
-        refreshToken,
-        expiresIn: config.jwt.accessExpiresIn,
+            token: accessToken,
+            refreshToken
     };
 };
 

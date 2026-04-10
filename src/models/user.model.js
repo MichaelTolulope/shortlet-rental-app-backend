@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import BookingModel from "./booking.model.js";
 
 const userSchema = new mongoose.Schema(
     {
@@ -40,6 +41,12 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: null,
         },
+        bookings: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Booking', // must match the name in mongoose.model('Booking', ...)
+            }
+        ],
     },
     {
         timestamps: true,

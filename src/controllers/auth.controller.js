@@ -22,7 +22,7 @@ const registerUser=async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const result = await login(email, password);
+        const result = await login(email, password, res);
         res.status(200).json({
             status: 'success',
             data: result,
@@ -31,7 +31,7 @@ const loginUser = async (req, res) => {
         console.error(error.message);
         return res.status(error.statusCode??500).json({
             status: `${error.status}`,
-            error: error.message,
+            message: error.message,
         })
     }
 };

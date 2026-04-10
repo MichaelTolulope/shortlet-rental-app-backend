@@ -62,11 +62,44 @@ const deleteOneProperty = async (req, res, next) => {
     }
 };
 
+const deletePropertyById = async (req, res, next) => {
+    try {
+        const isAdmin = req.user.role === 'admin';
+
+        await deleteProperty(
+            req.user._id,
+            req.params.id,
+            isAdmin
+        );
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Property deleted successfully',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const getUnavailableDates = async (req, res, next) => {
+    try {
+        const dates = await getUnavailableDatesService(req.params.id);
+
+        res.status(200).json({
+            status: 'success',
+            data: dates,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
 export {
     getOneByPropertyId,
     deleteOneProperty,
     getProperties,
     updateOneProperty,
-    createProperty
+    createProperty,
+    deletePropertyById,
+    getUnavailableDates
 }
